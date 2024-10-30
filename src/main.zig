@@ -78,7 +78,7 @@ pub fn getSlackConversations(allocator: std.mem.Allocator) !void {
     defer arena_allocator.deinit();
     const channels = try json.parseFromSliceLeaky(Channels, arena_allocator.allocator(), body, .{
         .allocate = .alloc_always,
-        // .ignore_unknown_fields = true,
+        .ignore_unknown_fields = true,
     });
 
     std.debug.print("Number of channels: {d}\n", .{channels.channels.len});
@@ -86,7 +86,6 @@ pub fn getSlackConversations(allocator: std.mem.Allocator) !void {
     // List all channel names
     std.debug.print("Channel names:\n", .{});
     for (channels.channels) |channel| {
-        // std.debug.print("- {s}", .{channel.name});
         std.debug.print("- {s} [{d}]\n", .{ channel.name, channel.num_members });
     }
     // std.debug.print("DT {s}", .{dt.timestampToDateTime(1727853324)});
